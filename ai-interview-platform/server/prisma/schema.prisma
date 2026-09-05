@@ -1,0 +1,97 @@
+// Prisma Schema - AI Interview Platform V1
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum InterviewRole {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  JAVA
+  CPP
+}
+
+enum InterviewLevel {
+  INTERN
+  FRESHER
+  JUNIOR
+}
+
+model User {
+  id          Int         @id @default(autoincrement())
+  name        String
+  email       String      @unique
+  password    String
+  createdAt   DateTime    @default(now())
+
+  interviews  Interview[]
+}
+
+model Interview {
+  id            Int             @id @default(autoincrement())
+  role          InterviewRole
+  level         InterviewLevel
+  totalQuestions Int
+
+  createdAt     DateTime        @default(now())
+
+  userId        Int
+  user          User            @relation(fields: [userId], references: [id])
+
+  questions     Question[]
+  evaluation    Evaluation?
+}
+
+model Question {
+  id            Int         @id @default(autoincrement())
+  question      String
+  order         Int
+
+  interviewId   Int
+  interview     Interview   @relation(fields: [interviewId], references: [id])
+
+  answer        Answer?
+}
+
+model Answer {
+  id            Int       @id @default(autoincrement())
+  response      String
+
+  questionId    Int       @unique
+  question      Question  @relation(fields: [questionId], references: [id])
+}
+
+model Evaluation {
+  id                    Int        @id @default(autoincrement())
+
+  overallScore          Float
+  technicalScore        Float
+  communicationScore    Float
+
+  strengths             String
+  weaknesses            String
+  suggestions           String
+
+  interviewId           Int        @unique
+  interview             Interview  @relation(fields: [interviewId], references: [id])
+
+  skillScores            SkillScore[]
+}
+
+model SkillScore {
+  id            Int        @id @default(autoincrement())
+
+  skill         String
+  score         Float
+
+  evaluationId  Int
+  evaluation    Evaluation @relation(fields: [evaluationId], references: [id])
+
+  @@index([evaluationId])
+}
