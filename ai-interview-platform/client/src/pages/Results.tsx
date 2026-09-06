@@ -104,127 +104,52 @@ const Results = () => {
   }
 
   return (
-    <Container maxWidth="md">
-      <Box sx={{ py: 5 }}>
-        <Typography
-  variant="h3"
-  gutterBottom
-  sx={{ textAlign: "center" }}
->
-  Interview Results 🎯
-</Typography>
+    <Container maxWidth="md" className="page-shell">
+      <Box>
+        <Typography className="eyebrow">Session debrief</Typography>
+        <Typography className="page-title">Your interview results</Typography>
+        <Typography className="page-subtitle" sx={{ mb: 4 }}>A focused readout of what went well and where your next practice session can go.</Typography>
 
-        <Typography
-  variant="h6"
-  color="text.secondary"
-  sx={{
-    mb: 4,
-    textAlign: "center",
-  }}
->
-  AI-powered interview evaluation
-</Typography>
-
-        <Card sx={{ mb: 3 }}>
+        <Card className="score-hero">
           <CardContent>
-            <Typography variant="h5" gutterBottom>
-              Overall Score
-            </Typography>
-
-            <Typography variant="h2" color="primary">
-              {evaluation.overallScore}/10
-            </Typography>
+            <Typography component="h2">Overall score</Typography>
+            <Typography component="p">Your strongest signal across this session.</Typography>
           </CardContent>
+          <span className="score-number">{evaluation.overallScore}<small>/10</small></span>
         </Card>
 
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "1fr 1fr",
-            },
-            gap: 3,
-            mb: 3,
-          }}
-        >
-          <Card>
+        <Box className="score-grid">
+          <Card className="score-card">
             <CardContent>
-              <Typography variant="h6">
-                Technical Score
-              </Typography>
-
-              <Typography variant="h3" color="primary">
-                {evaluation.technicalScore}/10
-              </Typography>
+              <Typography className="stat-label">Technical score</Typography>
+              <strong>{evaluation.technicalScore}/10</strong>
             </CardContent>
           </Card>
-
-          <Card>
+          <Card className="score-card">
             <CardContent>
-              <Typography variant="h6">
-                Communication Score
-              </Typography>
-
-              <Typography variant="h3" color="primary">
-                {evaluation.communicationScore}/10
-              </Typography>
+              <Typography className="stat-label">Communication score</Typography>
+              <strong>{evaluation.communicationScore}/10</strong>
             </CardContent>
           </Card>
         </Box>
 
-          <Card sx={{ mb: 3 }}>
+          <Card className="result-section">
   <CardContent>
-    <Typography variant="h5" gutterBottom>
-      📊 Skill-wise Performance
-    </Typography>
+    <Typography component="h3">Skill-wise performance</Typography>
 
     {evaluation.skillScores.map((skill) => (
-      <Box key={skill.id} sx={{ mb: 2 }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            mb: 0.5,
-          }}
-        >
-          <Typography>
-            {skill.skill}
-          </Typography>
-
-          <Typography sx={{ fontWeight: "bold" }}>
-  {skill.score}/10
-</Typography>
-        </Box>
-
-        <Box
-          sx={{
-            width: "100%",
-            height: 10,
-            backgroundColor: "#e0e0e0",
-            borderRadius: 5,
-            overflow: "hidden",
-          }}
-        >
-          <Box
-            sx={{
-              width: `${skill.score * 10}%`,
-              height: "100%",
-              backgroundColor: "primary.main",
-            }}
-          />
-        </Box>
+      <Box key={skill.id} className="skill-row">
+        <div className="skill-label"><span>{skill.skill}</span><span>{skill.score}/10</span></div>
+        <div className="skill-track"><div className="skill-fill" style={{ width: `${skill.score * 10}%` }} /></div>
       </Box>
     ))}
   </CardContent>
 </Card>
 
 
-        <Card sx={{ mb: 3 }}>
+        <Card className="result-section">
           <CardContent>
-            <Typography variant="h5" gutterBottom>
-              💪 Strengths
-            </Typography>
+            <Typography component="h3">Strengths</Typography>
 
             <Typography>
               {evaluation.strengths}
@@ -232,11 +157,9 @@ const Results = () => {
           </CardContent>
         </Card>
 
-        <Card sx={{ mb: 3 }}>
+        <Card className="result-section">
           <CardContent>
-            <Typography variant="h5" gutterBottom>
-              ⚠️ Weaknesses
-            </Typography>
+            <Typography component="h3">Weaknesses</Typography>
 
             <Typography>
               {evaluation.weaknesses}
@@ -244,11 +167,9 @@ const Results = () => {
           </CardContent>
         </Card>
 
-        <Card sx={{ mb: 3 }}>
+        <Card className="result-section">
           <CardContent>
-            <Typography variant="h5" gutterBottom>
-              🚀 Suggestions
-            </Typography>
+            <Typography component="h3">Suggestions</Typography>
 
             <Typography>
               {evaluation.suggestions}

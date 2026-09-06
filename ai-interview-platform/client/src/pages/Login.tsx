@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Container, Typography, Box } from "@mui/material";
+import { TextField, Button, Typography, Box } from "@mui/material";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
@@ -43,68 +43,30 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          AI Interview Platform
-        </Typography>
-
-        <Typography variant="h5" gutterBottom>
-          Login
-        </Typography>
-
-        <Box
-          component="form"
-          onSubmit={handleLogin}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-            mt: 2,
-          }}
-        >
-          <TextField
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            fullWidth
-          />
-
-          <TextField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            fullWidth
-          />
-
-          {error && (
-            <Typography color="error">
-              {error}
-            </Typography>
-          )}
-
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={loading}
-            fullWidth
-          >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+    <main className="login-page">
+      <section className="login-layout">
+        <div className="login-intro">
+          <div className="brand-mark"><span className="brand-dot" /> Prepwise</div>
+          <div>
+            <span className="login-badge">AI-powered practice</span>
+            <Typography component="h1">Build confidence before the interview.</Typography>
+            <Typography component="p">Practice realistic questions, sharpen your answers, and turn every session into useful momentum.</Typography>
+          </div>
+        </div>
+        <div className="login-form">
+          <Typography component="h2">Welcome back</Typography>
+          <Typography component="p">Sign in to continue your interview practice.</Typography>
+          <Box component="form" onSubmit={handleLogin}>
+            <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required fullWidth />
+            <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required fullWidth />
+            {error && <Typography className="error-message">{error}</Typography>}
+            <Button type="submit" variant="contained" disabled={loading} fullWidth>
+              {loading ? "Logging in..." : "Enter workspace"}
+            </Button>
+          </Box>
+        </div>
+      </section>
+    </main>
   );
 };
 

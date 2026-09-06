@@ -169,15 +169,10 @@ const handleSubmitInterview = async () => {
 };
 
   return (
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Typography variant="h3" gutterBottom>
-        AI Interview 🤖
-      </Typography>
-
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        Answer the following questions as if you were in a real
-        technical interview.
-      </Typography>
+    <Container maxWidth="md" className="page-shell interview-shell">
+      <Typography className="eyebrow">Live practice session</Typography>
+      <Typography className="page-title">Think out loud.</Typography>
+      <Typography className="page-subtitle" sx={{ mb: 4 }}>Answer each question as if you were in the room. Save your response when it feels ready.</Typography>
 
       {error && (
         <Typography color="error" sx={{ mb: 3 }}>
@@ -186,7 +181,7 @@ const handleSubmitInterview = async () => {
       )}
 
       {questions.length === 0 ? (
-        <Box>
+        <Box className="surface surface-pad">
           <Typography variant="h6" sx={{ mb: 2 }}>
             No questions generated yet.
           </Typography>
@@ -203,19 +198,14 @@ const handleSubmitInterview = async () => {
           </Button>
         </Box>
       ) : (
-        <Box
-            sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 3,
-            }}
-        >
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
             {questions.map((question) => (
-        <Card key={question.id}>
+        <Card key={question.id} className="question-card">
         <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Question {question.order}
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 12, mb: 2 }}>
+            <span className="question-number">{question.order}</span>
+            <Typography variant="h6">Question {question.order}</Typography>
+          </Box>
 
           <Typography sx={{ mb: 2 }}>
             {question.question}
@@ -236,37 +226,28 @@ const handleSubmitInterview = async () => {
             }
           />
 
+          <Box className="answer-actions">
           <Button
             variant="outlined"
-            sx={{ mt: 2 }}
             disabled={savingQuestion === question.id}
             onClick={() => saveAnswer(question.id)}
           >
             {savingQuestion === question.id
               ? "Saving..."
-              : "Save Answer"}
+              : "Save answer"}
           </Button>
 
           {savedQuestion === question.id && (
-            <Typography
-              color="success.main"
-              sx={{ mt: 1 }}
-            >
-              ✓ Answer saved
-            </Typography>
+            <Typography className="saved-message">Answer saved</Typography>
           )}
+          </Box>
         </CardContent>
       </Card>
     ))}
 
     {/* SUBMIT INTERVIEW BUTTON */}
-    <Box
-      sx={{
-        mt: 3,
-        mb: 5,
-        textAlign: "center",
-      }}
-    >
+    <Box className="submit-panel">
+      <Typography component="p">Ready to see how you performed?</Typography>
       <Button
         variant="contained"
         size="large"
@@ -276,7 +257,7 @@ const handleSubmitInterview = async () => {
       >
         {evaluating
           ? "AI is evaluating your interview..."
-          : "Submit Interview"}
+          : "Submit interview"}
       </Button>
     </Box>
   </Box>

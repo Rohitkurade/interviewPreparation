@@ -53,19 +53,13 @@ const CreateInterview = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 3,
-        }}
-      >
-        <Typography variant="h4">
-          Create New Interview
-        </Typography>
+    <Container maxWidth="sm" className="page-shell">
+      <Box className="form-shell">
+        <Typography className="eyebrow">Set your challenge</Typography>
+        <Typography className="page-title">Create a new interview</Typography>
+        <Typography className="page-subtitle">Choose a focus and we&apos;ll prepare a tailored practice session for you.</Typography>
+
+        <Box className="surface surface-pad form-card form-stack">
 
         <FormControl fullWidth>
           <InputLabel>Role</InputLabel>
@@ -136,6 +130,7 @@ const CreateInterview = () => {
           </Select>
         </FormControl>
 
+        <Box className="form-actions">
         <Button
           variant="contained"
           size="large"
@@ -144,8 +139,10 @@ const CreateInterview = () => {
         >
           {loading
             ? "Creating Interview..."
-            : "Start Interview"}
+            : "Start interview"}
         </Button>
+          </Box>
+          </Box>
       </Box>
     </Container>
   );

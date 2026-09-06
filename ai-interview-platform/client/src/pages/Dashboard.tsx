@@ -103,8 +103,8 @@ const Dashboard = () => {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ py: 5 }}>
+    <Container maxWidth="lg" className="page-shell">
+      <Box>
         {/* Header */}
 
         <Box
@@ -116,16 +116,9 @@ const Dashboard = () => {
           }}
         >
           <Box>
-            <Typography variant="h4">
-              Welcome, {user?.name} 👋
-            </Typography>
-
-            <Typography
-              color="text.secondary"
-              sx={{ mt: 1 }}
-            >
-              Track your interview preparation progress.
-            </Typography>
+            <Typography className="eyebrow">Your practice workspace</Typography>
+            <Typography className="page-title">Welcome, {user?.name}</Typography>
+            <Typography className="page-subtitle">Track your progress and keep your interview skills moving forward.</Typography>
           </Box>
 
           <Button
@@ -139,71 +132,45 @@ const Dashboard = () => {
 
         {/* Statistics */}
 
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(3, 1fr)",
-            },
-            gap: 3,
-            mb: 5,
-          }}
-        >
-          <Card>
+        <Box className="dashboard-grid">
+          <Card className="stat-card">
             <CardContent>
-              <Typography color="text.secondary">
-                Total Interviews
-              </Typography>
-
-              <Typography variant="h3">
-                {interviews.length}
-              </Typography>
+              <Typography className="stat-label">Total interviews</Typography>
+              <Typography className="stat-value">{interviews.length}</Typography>
             </CardContent>
           </Card>
-
-          <Card>
+          <Card className="stat-card">
             <CardContent>
-              <Typography color="text.secondary">
-                Average Score
-              </Typography>
-
-              <Typography variant="h3">
-                {averageScore}/10
-              </Typography>
+              <Typography className="stat-label">Average score</Typography>
+              <Typography className="stat-value">{averageScore}<small>/10</small></Typography>
             </CardContent>
           </Card>
-
-          <Card>
+          <Card className="stat-card">
             <CardContent>
-              <Typography color="text.secondary">
-                Best Score
-              </Typography>
-
-              <Typography variant="h3">
-                {bestScore}/10
-              </Typography>
+              <Typography className="stat-label">Best score</Typography>
+              <Typography className="stat-value">{bestScore}<small>/10</small></Typography>
             </CardContent>
           </Card>
         </Box>
 
         {/* Start Interview */}
 
-        <Box sx={{ textAlign: "center", mb: 5 }}>
+        <Box sx={{ textAlign: "right", mb: 5 }}>
           <Button
             variant="contained"
             size="large"
             onClick={() => navigate("/create-interview")}
           >
-            + Start New Interview
+            + Start new interview
           </Button>
         </Box>
 
         {/* Interview History */}
 
-        <Typography variant="h5" sx={{ mb: 3 }}>
-          Interview History
-        </Typography>
+        <div className="history-heading">
+          <Typography component="h2">Interview history</Typography>
+          <Typography className="stat-label">{interviews.length} sessions</Typography>
+        </div>
 
         {loading ? (
           <Box
@@ -240,7 +207,7 @@ const Dashboard = () => {
             }}
           >
             {interviews.map((interview) => (
-              <Card key={interview.id}>
+              <Card key={interview.id} className="history-card">
                 <CardContent>
                   <Box
                     sx={{
@@ -276,6 +243,7 @@ const Dashboard = () => {
                       {interview.evaluation ? (
                         <>
                           <Chip
+                            className="status-chip"
                             label={`${interview.evaluation.overallScore}/10`}
                             color="primary"
                           />
@@ -293,6 +261,7 @@ const Dashboard = () => {
                         </>
                       ) : (
                         <Chip
+                          className="status-chip"
                           label="Not Evaluated"
                           variant="outlined"
                         />
