@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import CreateInterview from "./pages/CreateInterview";
 import Interview from "./pages/Interview";
 import Results from "./pages/Results";
+import StudyPlan from "./pages/StudyPlan";
 
 const ThemeToggle = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -59,6 +60,9 @@ function App() {
           path="/results/:id"
           element={<Results />}
         />
+
+        <Route path="/study-plan" element={<StudyPlan />} />
+
 
         <Route
           path="*"

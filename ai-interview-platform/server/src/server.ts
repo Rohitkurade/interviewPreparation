@@ -3,6 +3,8 @@ import cors from "cors";
 import { prisma } from "./lib/prisma";
 import authRoutes from "./routes/auth.routes";
 import interviewRoutes from "./routes/interview.routes";
+import analyticsRoutes from "./routes/analytics.routes";
+import studyPlanRoutes from "./routes/studyPlan.routes";
 
 const app = express();
 
@@ -10,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/interviews", interviewRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/analytics", analyticsRoutes);
+app.use("/api/study-plan", studyPlanRoutes);
 
 app.get("/api/health", async (req, res) => {
   try {
