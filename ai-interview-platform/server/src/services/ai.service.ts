@@ -9,15 +9,44 @@ const client = new OpenAI({
 export const generateInterviewQuestions = async (
   role: string,
   level: string,
-  totalQuestions: number
+  totalQuestions: number,
+  personalizedContext?: {
+    resumeAnalysis: unknown;
+    jobDescriptionAnalysis: unknown;
+    matchResult: unknown;
+  }
 ) => {
+  const personalization = personalizedContext
+    ? `
+PERSONALIZATION CONTEXT
+
+RESUME ANALYSIS:
+${JSON.stringify(personalizedContext.resumeAnalysis)}
+
+JOB DESCRIPTION ANALYSIS:
+${JSON.stringify(personalizedContext.jobDescriptionAnalysis)}
+
+RESUME-JOB MATCH RESULT:
+${JSON.stringify(personalizedContext.matchResult)}
+`
+    : "";
+
   const response = await client.chat.completions.create({
     model: "openai/gpt-oss-20b",
+
+    response_format: {
+      type: "json_object",
+    },
+
+    max_completion_tokens: 4096,
+
+    temperature: 0.7,
+
     messages: [
       {
         role: "system",
         content:
-          "You are an expert technical interviewer who creates high-quality interview questions.",
+          "You are an expert technical interviewer who creates high-quality, personalized interview questions.",
       },
       {
         role: "user",
@@ -27,28 +56,37 @@ Generate ${totalQuestions} interview questions for:
 Job Role: ${role}
 Experience Level: ${level}
 
+${personalization}
+
 Requirements:
+
 - Questions must be relevant to the selected role.
 - Match the difficulty to the experience level.
 - Cover practical and conceptual knowledge.
 - Avoid duplicate questions.
-- Return ONLY a JSON array.
-- Each item must contain exactly:
-  "question": string
+- If personalization context is provided, prioritize important skills from the job description.
+- Test skills that are supported by the candidate's resume.
+- Include questions related to missing or weaker job requirements when appropriate.
+- Use the candidate's projects, technologies, and experience when creating realistic questions.
+- Do not ask about technologies that have no evidence in the provided resume unless they are explicitly required by the job description.
+- Questions should feel like a real technical interview.
+- Return exactly ${totalQuestions} questions.
 
-Example:
-[
-  {
-    "question": "What is the difference between let, const and var in JavaScript?"
-  }
-]
+Return ONLY valid JSON using this structure:
+
+{
+  "questions": [
+    {
+      "question": "string"
+    }
+  ]
+}
 
 Do not include markdown.
 Do not include explanations outside the JSON.
 `,
       },
     ],
-    temperature: 0.7,
   });
 
   const content = response.choices[0]?.message?.content;

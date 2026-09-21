@@ -20,13 +20,45 @@ export const createInterviewController = async (
       });
     }
 
-    const { role, level, totalQuestions } = req.body;
+    const { role, level, totalQuestions, matchResultId } = req.body;
 
     if (!role || !level || !totalQuestions) {
       return res.status(400).json({
         message: "Role, level and totalQuestions are required",
       });
     }
+    let validatedMatchResultId: number | null = null;
+
+if (matchResultId !== undefined && matchResultId !== null) {
+  const parsedMatchResultId = Number(matchResultId);
+
+  if (
+    !Number.isInteger(parsedMatchResultId) ||
+    parsedMatchResultId <= 0
+  ) {
+    return res.status(400).json({
+      message: "Invalid matchResultId",
+    });
+  }
+
+  const matchResult = await prisma.matchResult.findFirst({
+    where: {
+      id: parsedMatchResultId,
+      resume: {
+        userId: req.user.userId,
+      },
+    },
+  });
+
+  if (!matchResult) {
+    return res.status(404).json({
+      message: "Match result not found",
+    });
+  }
+
+  validatedMatchResultId = parsedMatchResultId;
+}
+
 
     if (!Number.isInteger(totalQuestions) || totalQuestions < 1 || totalQuestions > 20) {
       return res.status(400).json({
@@ -35,11 +67,12 @@ export const createInterviewController = async (
     }
 
     const interview = await createInterview(
-      req.user.userId,
-      role,
-      level,
-      totalQuestions
-    );
+  req.user.userId,
+  role,
+  level,
+  totalQuestions,
+  validatedMatchResultId
+);
 
     return res.status(201).json({
       message: "Interview created successfully",
@@ -117,11 +150,19 @@ export const generateQuestionsController = async (
     }
 
     const interview = await prisma.interview.findFirst({
-      where: {
-        id: interviewId,
-        userId: req.user.userId,
+  where: {
+    id: interviewId,
+    userId: req.user.userId,
+  },
+  include: {
+    matchResult: {
+      include: {
+        resume: true,
+        jobDescription: true,
       },
-    });
+    },
+  },
+});
 
     if (!interview) {
       return res.status(404).json({
@@ -130,26 +171,41 @@ export const generateQuestionsController = async (
     }
 
     const aiResponse = await generateInterviewQuestions(
-      interview.role,
-      interview.level,
-      interview.totalQuestions
-    );
+  interview.role,
+  interview.level,
+  interview.totalQuestions,
+  interview.matchResult
+    ? {
+        resumeAnalysis: interview.matchResult.resume.analysis,
+        jobDescriptionAnalysis: interview.matchResult.jobDescription.analysis,
+        matchResult: {
+          matchScore: interview.matchResult.matchScore,
+          matchedSkills: interview.matchResult.matchedSkills,
+          missingSkills: interview.matchResult.missingSkills,
+          additionalSkills: interview.matchResult.additionalSkills,
+          analysis: interview.matchResult.analysis,
+        },
+      }
+    : undefined
+);
 
-    let questions;
+    let parsedResponse;
 
-    try {
-      questions = JSON.parse(aiResponse);
-    } catch {
-      return res.status(500).json({
-        message: "AI returned invalid question format",
-      });
-    }
+try {
+  parsedResponse = JSON.parse(aiResponse);
+} catch {
+  return res.status(500).json({
+    message: "AI returned invalid question format",
+  });
+}
 
-    if (!Array.isArray(questions)) {
-      return res.status(500).json({
-        message: "AI returned invalid question format",
-      });
-    }
+const questions = parsedResponse.questions;
+
+if (!Array.isArray(questions)) {
+  return res.status(500).json({
+    message: "AI returned invalid question format",
+  });
+}
 
     await prisma.question.deleteMany({
       where: {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -17,11 +17,35 @@ const CreateInterview = () => {
   const [role, setRole] = useState("FRONTEND");
   const [level, setLevel] = useState("INTERN");
   const [totalQuestions, setTotalQuestions] = useState(5);
-
+  
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { token } = useAuth();
+  const [matchResultId, setMatchResultId] = useState<number | null>(null);
+
+  useEffect(() => {
+  const fetchLatestMatch = async () => {
+    try {
+      const response = await api.get("/matches/latest", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setMatchResultId(response.data.matchResult.id);
+    } catch (error) {
+      // No match result is okay.
+      // The user can still create a normal interview.
+      console.log("No personalized match available.");
+      setMatchResultId(null);
+    }
+  };
+
+  if (token) {
+    fetchLatestMatch();
+  }
+}, [token]);
 
   const handleCreateInterview = async () => {
     try {
@@ -30,9 +54,10 @@ const CreateInterview = () => {
       const response = await api.post(
         "/interviews",
         {
-          role,
-          level,
-          totalQuestions,
+        role,
+        level,
+        totalQuestions,
+        matchResultId,
         },
         {
           headers: {

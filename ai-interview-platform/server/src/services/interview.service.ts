@@ -5,7 +5,8 @@ export const createInterview = async (
   userId: number,
   role: InterviewRole,
   level: InterviewLevel,
-  totalQuestions: number
+  totalQuestions: number,
+  matchResultId: number | null = null
 ) => {
   const interview = await prisma.interview.create({
     data: {
@@ -13,6 +14,7 @@ export const createInterview = async (
       role,
       level,
       totalQuestions,
+      matchResultId,
     },
   });
 

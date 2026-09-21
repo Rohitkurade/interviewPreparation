@@ -12,6 +12,7 @@ import CreateInterview from "./pages/CreateInterview";
 import Interview from "./pages/Interview";
 import Results from "./pages/Results";
 import StudyPlan from "./pages/StudyPlan";
+import ResumeMatch from "./pages/ResumeMatch";
 
 const ThemeToggle = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -28,7 +29,9 @@ const ThemeToggle = () => {
     <button
       className="theme-toggle"
       type="button"
-      aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={
+        darkMode ? "Switch to light mode" : "Switch to dark mode"
+      }
       onClick={() => setDarkMode((currentMode) => !currentMode)}
     >
       <span aria-hidden="true">{darkMode ? "☀" : "☾"}</span>
@@ -41,6 +44,7 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeToggle />
+
       <Routes>
         <Route path="/login" element={<Login />} />
 
@@ -63,6 +67,10 @@ function App() {
 
         <Route path="/study-plan" element={<StudyPlan />} />
 
+        <Route
+          path="/resume-match"
+          element={<ResumeMatch />}
+        />
 
         <Route
           path="*"
