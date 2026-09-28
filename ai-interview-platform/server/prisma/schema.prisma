@@ -1,10 +1,12 @@
 // Prisma Schema - AI Interview Platform V1
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension = "js"
 }
-
 datasource db {
   provider = "postgresql"
 }

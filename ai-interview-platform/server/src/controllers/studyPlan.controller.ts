@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { getUserAnalytics } from "../services/analytics.service";
-import { generateStudyPlan } from "../services/studyPlan.service";
+import { getUserAnalytics } from "../services/analytics.service.js";
+import { generateStudyPlan } from "../services/studyPlan.service.js";
 
 export const getStudyPlanController = async (
   req: Request,

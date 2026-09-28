@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { authMiddleware } from "../middleware/auth.middleware";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 import {
   createJobDescriptionController,
-} from "../controllers/jobDescription.controller";
+} from "../controllers/jobDescription.controller.js";
 import {
   analyzeJobDescriptionController,
-} from "../controllers/jobDescriptionAnalysis.controller";
+} from "../controllers/jobDescriptionAnalysis.controller.js";
 
 const router = Router();
 

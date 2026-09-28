@@ -1,5 +1,5 @@
-import { InterviewLevel, InterviewRole } from "../generated/prisma/client";
-import { prisma } from "../lib/prisma";
+import { InterviewLevel, InterviewRole } from "../generated/prisma/client.js";
+import { prisma } from "../lib/prisma.js";
 
 export const createInterview = async (
   userId: number,

@@ -4,10 +4,10 @@ import {
   getInterviewController,
   generateQuestionsController,
   getUserInterviewsController,
-} from "../controllers/interview.controller";
-import { submitAnswerController } from "../controllers/answer.controller";
-import { authMiddleware } from "../middleware/auth.middleware";
-import { evaluateInterviewController } from "../controllers/evaluation.controller";
+} from "../controllers/interview.controller.js";
+import { submitAnswerController } from "../controllers/answer.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { evaluateInterviewController } from "../controllers/evaluation.controller.js";
 
 const router = Router();
 

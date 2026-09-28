@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { analyzeJobDescription } from "../services/jobDescriptionAnalysis.service";
+import { prisma } from "../lib/prisma.js";
+import { analyzeJobDescription } from "../services/jobDescriptionAnalysis.service.js";
 
 export const analyzeJobDescriptionController = async (
   req: Request,

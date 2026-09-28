@@ -1,12 +1,12 @@
 import { Response } from "express";
-import { AuthenticatedRequest } from "../middleware/auth.middleware";
+import { AuthenticatedRequest } from "../middleware/auth.middleware.js";
 import {
   createInterview,
   getInterviewById,
   getUserInterviews,
-} from "../services/interview.service";
-import { generateInterviewQuestions } from "../services/ai.service";
-import { prisma } from "../lib/prisma";
+} from "../services/interview.service.js";
+import { generateInterviewQuestions } from "../services/ai.service.js";
+import { prisma } from "../lib/prisma.js";
 
 
 export const createInterviewController = async (

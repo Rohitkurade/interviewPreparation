@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { AuthenticatedRequest } from "../middleware/auth.middleware";
-import { evaluateInterview } from "../services/evaluation.service";
+import { AuthenticatedRequest } from "../middleware/auth.middleware.js";
+import { evaluateInterview } from "../services/evaluation.service.js";
 
 export const evaluateInterviewController = async (
   req: AuthenticatedRequest,

@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 
 export const getUserAnalytics = async (userId: number) => {
   const interviews = await prisma.interview.findMany({

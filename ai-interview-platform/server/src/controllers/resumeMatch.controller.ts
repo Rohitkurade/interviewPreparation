@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { generateResumeMatch } from "../services/resumeMatch.service";
+import { prisma } from "../lib/prisma.js";
+import { generateResumeMatch } from "../services/resumeMatch.service.js";
 
 export const generateResumeMatchController = async (
   req: Request,

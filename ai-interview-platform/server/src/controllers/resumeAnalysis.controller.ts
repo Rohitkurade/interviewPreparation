@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma";
-import { analyzeResume } from "../services/resumeAnalysis.service";
+import { prisma } from "../lib/prisma.js";
+import { analyzeResume } from "../services/resumeAnalysis.service.js";
 
 export const analyzeResumeController = async (
   req: Request,

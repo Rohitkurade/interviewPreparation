@@ -1,8 +1,8 @@
 import { Router } from "express";
 import multer from "multer";
-import { authMiddleware } from "../middleware/auth.middleware";
-import { uploadResumeController } from "../controllers/resume.controller";
-import { analyzeResumeController } from "../controllers/resumeAnalysis.controller";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { uploadResumeController } from "../controllers/resume.controller.js";
+import { analyzeResumeController } from "../controllers/resumeAnalysis.controller.js";
 
 const router = Router();
 

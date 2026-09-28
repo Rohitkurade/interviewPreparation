@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { loginUser, registerUser } from "../services/auth.service";
-import { AuthenticatedRequest } from "../middleware/auth.middleware";
-import { prisma } from "../lib/prisma";
+import { loginUser, registerUser } from "../services/auth.service.js";
+import { AuthenticatedRequest } from "../middleware/auth.middleware.js";
+import { prisma } from "../lib/prisma.js";
 
 export const register = async (req: Request, res: Response) => {
   try {

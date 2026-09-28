@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PDFParse } from "pdf-parse";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 
 export const uploadResumeController = async (
   req: Request,

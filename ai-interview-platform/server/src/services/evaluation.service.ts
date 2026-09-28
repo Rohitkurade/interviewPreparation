@@ -1,6 +1,6 @@
 import "dotenv/config";
 import OpenAI from "openai";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 
 const client = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
