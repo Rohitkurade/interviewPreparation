@@ -408,6 +408,14 @@ const scoreChange =
   </Button>
 
   <Button
+    variant="outlined"
+    size="large"
+    onClick={() => navigate("/resume-match")}
+  >
+    Resume & Job Match
+  </Button>
+
+  <Button
     variant="contained"
     size="large"
     onClick={() => navigate("/create-interview")}
