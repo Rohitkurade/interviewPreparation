@@ -63,6 +63,29 @@ const Login = () => {
             <Button type="submit" variant="contained" disabled={loading} fullWidth>
               {loading ? "Logging in..." : "Enter workspace"}
             </Button>
+            <Typography
+  component="p"
+  sx={{
+    textAlign: "center",
+    marginTop: "12px",
+  }}
+>
+  Don't have an account?{" "}
+  <Box
+    component="span"
+    onClick={() => navigate("/register")}
+    sx={{
+      cursor: "pointer",
+      fontWeight: 600,
+      color: "#2196f3",
+      "&:hover": {
+        textDecoration: "underline",
+      },
+    }}
+  >
+    Create one
+  </Box>
+</Typography>
           </Box>
         </div>
       </section>
